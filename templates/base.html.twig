@@ -1,13 +1,13 @@
-{% extends "@SurvosBootstrap/sneat/base.html.twig" %}
+{#{% extends "@SurvosBootstrap/sneat/base.html.twig" %}#}
+{% extends "@SurvosBootstrap/%s/base.html.twig"|format(theme_option('theme')) %}
 
 {% block javascripts %}
-{{ encore_entry_script_tags('app') }}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
 {{ parent() }}
 {% endblock %}
 
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
     {{ parent() }}
 {% endblock %}
 

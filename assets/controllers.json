@@ -1,4 +1,12 @@
 {
-    "controllers": [],
+    "controllers": {
+        "@survos/bootstrap-bundle": {
+            "search": {
+                "enabled": true,
+                "fetch": "lazy",
+                "autoimport": []
+            }
+        }
+    },
     "entrypoints": []
 }

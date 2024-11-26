@@ -18,14 +18,14 @@
 <div class="col-md-6 col-lg-4">
 
     {% if admin_menu is not defined %}
-    {% set admin_menu = get_menu(admin.menuName()) %}
+{#    {% set admin_menu = get_menu(admin.menuName()) %}#}
     {% endif %}
 {#    {{ render_menu(admin_menu) }}#}
 
 
 
 
-    {% for child in admin_menu.root.children|filter(c => c.children|length ) %}
+    {% for child in admin_menu.root.children|default([])|filter(c => c.children|length ) %}
     <div class="col-md-6 col-lg-4">
         {% embed '_partial/card.html.twig' with {
         } %}

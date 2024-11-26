@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
-import constants from "../js/constants";
+import constants from "../js/constants.js"
 
 /*
 * The following line makes this controller "lazy": it won't be downloaded until needed

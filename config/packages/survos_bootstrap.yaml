@@ -26,7 +26,7 @@ survos_bootstrap:
     abbr: <b>my</b>App
   options:
     # consider https://startbootstrap.com/previews/simple-sidebar as another theme
-    theme: bootswatch
+    theme: tabler
     allow_login: false
     offcanvas: end
 

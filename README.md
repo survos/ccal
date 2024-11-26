@@ -10,7 +10,6 @@ Individuals can also belong to calendars, including private ones if given permis
 git clone git@github.com:survos/calendar-bundle-demo.git
 cd calendar-bundle-demo/
 composer install
-yarn install && yarn dev
 bin/console d:database:create
 bin/console d:schema:update --force --complete
 bin/console doctrine:fixtures:load -n

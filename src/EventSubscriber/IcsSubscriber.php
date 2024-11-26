@@ -9,12 +9,14 @@ use App\Service\CalendarService;
 use CalendarBundle\CalendarEvents;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\CalendarEvent;
+use CalendarBundle\Event\SetDataEvent;
 use Carbon\Carbon;
 use ICal\ICal;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class IcsSubscriber implements EventSubscriberInterface
+class IcsSubscriber
 {
     public function __construct(
         private CalendarService $calendarService,
@@ -22,14 +24,9 @@ class IcsSubscriber implements EventSubscriberInterface
     ) {
     }
 
-    public static function getSubscribedEvents()
-    {
-        return [
-            CalendarEvents::SET_DATA => 'onCalendarSetData',
-        ];
-    }
 
-    public function onCalendarSetData(CalendarEvent $calendar)
+    #[AsEventListener()]
+    public function onCalendarSetData(SetDataEvent $calendar)
     {
         $start = $calendar->getStart();
         $end = $calendar->getEnd();
