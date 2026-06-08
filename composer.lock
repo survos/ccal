@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63103d8b3441fdbbffa8ec784007b6d5",
+    "content-hash": "b4fffe3b646c049b5887ce1c22ca18d8",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4055,7 +4055,7 @@
         },
         {
             "name": "survos/kit-bundle",
-            "version": "2.7.19",
+            "version": "2.7.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/kit-bundle.git",
@@ -4103,7 +4103,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/kit-bundle/issues",
-                "source": "https://github.com/survos/kit-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/kit-bundle/tree/2.7.21"
             },
             "funding": [
                 {
@@ -4215,6 +4215,85 @@
                 }
             ],
             "time": "2026-05-29T11:05:35+00:00"
+        },
+        {
+            "name": "survos/ux-calendar-bundle",
+            "version": "2.7.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/ux-calendar-bundle.git",
+                "reference": "01787e586679cbd1be48b5e9c79af3932dcc6e2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/ux-calendar-bundle/zipball/01787e586679cbd1be48b5e9c79af3932dcc6e2b",
+                "reference": "01787e586679cbd1be48b5e9c79af3932dcc6e2b",
+                "shasum": ""
+            },
+            "require": {
+                "johngrogg/ics-parser": "^3.5",
+                "php": "^8.4",
+                "survos/kit-bundle": "^2.5",
+                "symfony/config": "^8.0",
+                "symfony/dependency-injection": "^8.0",
+                "symfony/http-kernel": "^8.0",
+                "symfony/options-resolver": "^8.0",
+                "symfony/stimulus-bundle": "^2.0|^3.0",
+                "symfony/ux-twig-component": "^2.0|^3.0",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^13.0",
+                "roave/security-advisories": "dev-latest",
+                "symfony/framework-bundle": "^8.0",
+                "symfony/phpunit-bridge": "^8.0",
+                "symfony/twig-bundle": "^8.0",
+                "symfony/var-dumper": "^8.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^8.0"
+                },
+                "branch-alias": {
+                    "dev-main": "2.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\UxCalendarBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "FullCalendar UX integration for Symfony with AssetMapper and Twig components",
+            "keywords": [
+                "calendar",
+                "fullcalendar",
+                "symfony-bundle",
+                "symfony-ux",
+                "ux"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/ux-calendar-bundle/issues",
+                "source": "https://github.com/survos/ux-calendar-bundle/tree/2.7.21"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-06-08T12:53:46+00:00"
         },
         {
             "name": "symfony/asset",
@@ -12237,6 +12316,66 @@
             "time": "2026-05-15T04:58:09+00:00"
         },
         {
+            "name": "survos/deployment-bundle",
+            "version": "2.7.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/deployment-bundle.git",
+                "reference": "534cd449dc3650d014471a4c6bf8e6ad1013d4f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/deployment-bundle/zipball/534cd449dc3650d014471a4c6bf8e6ad1013d4f8",
+                "reference": "534cd449dc3650d014471a4c6bf8e6ad1013d4f8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.4",
+                "symfony/config": "^7.3||^8.0",
+                "symfony/console": "^7.3||^8.0",
+                "symfony/dependency-injection": "^7.3||^8.0",
+                "symfony/form": "^7.3||^8.0",
+                "symfony/http-kernel": "^7.3||^8.0",
+                "symfony/process": "^7.3||^8.0",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "symfony/browser-kit": "^7.3||^8.0",
+                "symfony/framework-bundle": "^7.3||^8.0",
+                "symfony/phpunit-bridge": "^7.3||^8.0",
+                "symfony/twig-bundle": "^7.3||^8.0",
+                "symfony/var-dumper": "^7.3||^8.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\DeploymentBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Tools for deploying Survos projects to dokku",
+            "keywords": [
+                "dev",
+                "symfony",
+                "symfony-ux"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/deployment-bundle/issues",
+                "source": "https://github.com/survos/deployment-bundle/tree/2.7.20"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-05-12T14:12:30+00:00"
+        },
+        {
             "name": "symfony/debug-bundle",
             "version": "v8.1.0",
             "source": {
@@ -12685,7 +12824,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "survos/deployment-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

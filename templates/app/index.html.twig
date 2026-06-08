@@ -1,79 +1,62 @@
-{# templates/booking/calendar.html.twig #}
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ccal — Community Calendar</title>
 
-{% block body %}
+    {# FullCalendar v7 ships CSS separately (no JS auto-injection). #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/skeleton.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/themes/classic/theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/themes/classic/palette.css">
+    <style>
+        body { font-family: system-ui, sans-serif; }
+        main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+        .ux-calendar-legend { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; margin: 0 0 1rem; }
+        .ux-calendar-legend__item { display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; user-select: none; }
+        .ux-calendar-legend__swatch { width: .9rem; height: .9rem; border-radius: 3px; display: inline-block; }
+    </style>
 
-    <h1>UX Demo</h1>
+    {#
+        Raw FullCalendar v7 ESM (NOT the jsDelivr /+esm bundles, which mangle FullCalendar's
+        preact class components — see fullcalendar #7474). The bundle's Stimulus controller
+        imports the bare specifiers below; the browser merges this with AssetMapper's importmap.
+    #}
+    <script type="importmap">
+    {
+        "imports": {
+            "preact": "https://cdn.jsdelivr.net/npm/preact@10.29.1/dist/preact.mjs",
+            "preact/hooks": "https://cdn.jsdelivr.net/npm/preact@10.19.5/hooks/dist/hooks.mjs",
+            "preact/jsx-runtime": "https://cdn.jsdelivr.net/npm/preact@10.19.5/jsx-runtime/dist/jsxRuntime.mjs",
+            "preact/compat": "https://cdn.jsdelivr.net/npm/preact@10.19.5/compat/dist/compat.mjs",
+            "preact/compat/client": "https://cdn.jsdelivr.net/npm/preact@10.19.5/compat/client.mjs",
+            "temporal-polyfill/fns/zoneddatetime": "https://cdn.jsdelivr.net/npm/temporal-polyfill@0.3.2/fns/zoneddatetime.js",
+            "temporal-polyfill/fns/plaindatetime": "https://cdn.jsdelivr.net/npm/temporal-polyfill@0.3.2/fns/plaindatetime.js",
+            "temporal-polyfill/fns/instant": "https://cdn.jsdelivr.net/npm/temporal-polyfill@0.3.2/fns/instant.js",
+            "@full-ui/headless-calendar": "https://cdn.jsdelivr.net/npm/@full-ui/headless-calendar@7.0.0-rc.3/index.js",
+            "fullcalendar": "https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/index.js",
+            "fullcalendar/themes/classic": "https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/themes/classic.js",
+            "fullcalendar/daygrid": "https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/daygrid.js",
+            "fullcalendar/timegrid": "https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/timegrid.js",
+            "fullcalendar/list": "https://cdn.jsdelivr.net/npm/fullcalendar@7.0.0-rc.3/list.js"
+        }
+    }
+    </script>
+    {{ importmap('app') }}
+</head>
+<body>
+    <main>
+        <h1>Rappahannock Community Calendar</h1>
+        <p>Aggregated from the community calendars stored in the database (<code>Feed</code> entities),
+            rendered with FullCalendar via AssetMapper. Run <code>bin/console app:load-demo-feeds</code>
+            to (re)load the sample calendars.</p>
 
-
-    <div>
-        <div>
-            A playground for some UX tools that we use or may use.
-        </div>
-
-        This is a working example of using <a href="https://github.com/tattali/CalendarBundle">CalendarBundle</a>, which integrates events from a database within a Symfony application with <a href="https://fullcalendar.io/">FullCalendar.io</a>.
-    </div>
-
-
-<div class="col-md-6 col-lg-4">
-
-    Idea: sitemap or menu.
-
-</div>
-{% endblock %}
-
-
-{% block card_with_tabs %}
-<div class="col-md-6 col-lg-4">
-    <!-- Cards with tabs component -->
-    <div class="card-tabs ">
-        <!-- Cards navigation -->
-        <ul class="nav nav-tabs">
-            <li class="nav-item"><a href="#tab-top-1" class="nav-link" data-bs-toggle="tab">Tab 1</a></li>
-            <li class="nav-item"><a href="#tab-top-2" class="nav-link" data-bs-toggle="tab">Tab 2</a></li>
-            <li class="nav-item"><a href="#tab-top-3" class="nav-link active" data-bs-toggle="tab">Tab 3</a></li>
-            <li class="nav-item"><a href="#tab-top-4" class="nav-link" data-bs-toggle="tab">Tab 4</a></li>
-        </ul>
-        <div class="tab-content">
-            <!-- Content of card #1 -->
-            <div id="tab-top-1" class="card tab-pane show">
-                <div class="card-body">
-                    <div class="card-title">Content of tab #1</div>
-                    <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
-                    </p>
-                </div>
-            </div>
-            <!-- Content of card #2 -->
-            <div id="tab-top-2" class="card tab-pane">
-                <div class="card-body">
-                    <div class="card-title">Content of tab #2</div>
-                    <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
-                    </p>
-                </div>
-            </div>
-            <!-- Content of card #3 -->
-            <div id="tab-top-3" class="card tab-pane active">
-                <div class="card-body">
-                    <div class="card-title">Content of tab #3</div>
-                    <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
-                    </p>
-                </div>
-            </div>
-            <!-- Content of card #4 -->
-            <div id="tab-top-4" class="card tab-pane">
-                <div class="card-body">
-                    <div class="card-title">Content of tab #4</div>
-                    <p class="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias aliquid distinctio dolorem expedita, fugiat hic magni molestiae molestias odit.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{% endblock %}
+        <twig:full_calendar
+            url="{{ eventsUrl }}"
+            :calendars="calendars"
+            initialView="dayGridMonth"
+            :options="{ height: 750 }"
+        />
+    </main>
+</body>
+</html>

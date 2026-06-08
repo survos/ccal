@@ -316,6 +316,9 @@
     "survos/core-bundle": {
         "version": "1.4.27"
     },
+    "survos/deployment-bundle": {
+        "version": "2.7.20"
+    },
     "survos/field-bundle": {
         "version": "2.7.19"
     },

@@ -2015,6 +2015,17 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     menu_options?: array<string, scalar|Param|null>,
  *     impersonate?: array<string, scalar|Param|null>,
  * }
+ * @psalm-type SurvosUxCalendarConfig = array{
+ *     stimulus_controller?: scalar|Param|null, // Default: "@survos/ux-calendar-bundle/fullcalendar"
+ *     calendars?: array<string, array{ // Default: []
+ *         label?: scalar|Param|null, // Default: null
+ *         color?: scalar|Param|null, // Default: null
+ *         url?: scalar|Param|null,
+ *     }>,
+ * }
+ * @psalm-type SurvosDeploymentConfig = array{
+ *     enabled?: bool|Param, // Default: true
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2037,6 +2048,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     ux_icons?: UxIconsConfig,
  *     survos_field?: SurvosFieldConfig,
  *     survos_tabler?: SurvosTablerConfig,
+ *     survos_ux_calendar?: SurvosUxCalendarConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2063,6 +2075,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         survos_field?: SurvosFieldConfig,
  *         survos_tabler?: SurvosTablerConfig,
+ *         survos_ux_calendar?: SurvosUxCalendarConfig,
+ *         survos_deployment?: SurvosDeploymentConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2086,6 +2100,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         survos_field?: SurvosFieldConfig,
  *         survos_tabler?: SurvosTablerConfig,
+ *         survos_ux_calendar?: SurvosUxCalendarConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2111,6 +2126,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         survos_field?: SurvosFieldConfig,
  *         survos_tabler?: SurvosTablerConfig,
+ *         survos_ux_calendar?: SurvosUxCalendarConfig,
+ *         survos_deployment?: SurvosDeploymentConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

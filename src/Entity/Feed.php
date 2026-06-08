@@ -64,6 +64,12 @@ class Feed implements RouteParametersInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private $eventCount;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $title = null;
+
+    #[ORM\Column(length: 7, nullable: true)]
+    public ?string $color = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,7 +81,7 @@ class Feed implements RouteParametersInterface
     }
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Gedmo\Slug(fields: ['url'])]
+    #[Gedmo\Slug(fields: ['title'])]
     private string $slug;
 
     #[ORM\Column(type: 'text', nullable: true)]

@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use App\Repository\EventRepository;
+use App\Repository\FeedRepository;
 use Jsvrcek\ICS\CalendarExport;
 use Jsvrcek\ICS\Utility\Formatter;
 use Spatie\IcalendarGenerator\Components\Calendar;
 use Spatie\IcalendarGenerator\Components\Event;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class AppController extends AbstractController
 {
@@ -41,9 +43,18 @@ class AppController extends AbstractController
 
 
     #[Route('/', name: 'app_homepage')]
-    public function index(): Response
+    public function index(UrlGeneratorInterface $urlGenerator, FeedRepository $feedRepository): Response
     {
+        // Build the legend map (id => {label, color}) from the DB feeds; the id is the
+        // feed slug, which matches each event's sourceId so the toggles line up.
+        $calendars = [];
+        foreach ($feedRepository->findAll() as $feed) {
+            $calendars[$feed->getSlug()] = ['label' => $feed->title ?? $feed->getSlug(), 'color' => $feed->color];
+        }
+
         return $this->render('app/index.html.twig', [
+            'eventsUrl' => $urlGenerator->generate('survos_ux_calendar_feed'),
+            'calendars' => $calendars,
         ]);
     }
 

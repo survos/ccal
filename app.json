@@ -1,0 +1,30 @@
+{
+    "name": "ccal",
+    "description": "Rappahannock Community Calendar — multi-org calendar aggregator",
+    "keywords": [
+        "php",
+        "symfony"
+    ],
+    "repository": "https://github.com/survos/ccal",
+    "scripts": {
+        "dokku": {
+            "predeploy": "bin/console importmap:install && bin/console asset-map:compile && bin/console secrets:decrypt-to-local --force && bin/console doctrine:migrations:migrate -n --allow-no-migration",
+            "postdeploy": "bin/console about"
+        }
+    },
+    "env": {
+        "WEB_CONCURRENCY": {
+            "description": "The number of PHP-FPM/web processes to run.",
+            "generator": "echo 5"
+        }
+    },
+    "image": "gliderlabs/herokuish",
+    "addons": [
+        "dokku-postgres"
+    ],
+    "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-php.git"
+        }
+    ]
+}

@@ -1,0 +1,2 @@
+ux_calendar_bundle:
+    resource: '@SurvosUxCalendarBundle/config/routes.yaml'

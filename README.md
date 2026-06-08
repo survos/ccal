@@ -1,71 +1,78 @@
-# Community Calendar
+# ccal — Community Calendar Aggregator
 
-A multi-organization calendar system for communities to share their calendars.
+A multi-organization community calendar. Organizations link iCal feeds (or create
+calendars natively); the events are aggregated, color-coded, and rendered with
+FullCalendar. Individuals can sign in and subscribe to the calendars they care about.
 
-Individuals can also belong to calendars, including private ones if given permissions.
+Rendering is provided by [`survos/ux-calendar-bundle`](https://github.com/survos/ux-calendar-bundle)
+(FullCalendar v7 + AssetMapper + Stimulus). ccal is the app around it: the org/feed
+data model, moderation, accounts, and ingestion.
 
-## Quick Start
+Symfony 8 · PHP 8.4 · AssetMapper (no Webpack/yarn).
+
+## Quick start
 
 ```bash
-git clone git@github.com:survos/calendar-bundle-demo.git
-cd calendar-bundle-demo/
+git clone git@github.com:survos/ccal.git
+cd ccal
 composer install
-yarn install && yarn dev
-bin/console d:database:create
-bin/console d:schema:update --force --complete
-bin/console doctrine:fixtures:load -n
+php bin/console importmap:install          # download JS assets (AssetMapper)
+php bin/console doctrine:schema:update --force --complete
+php bin/console app:load-demo-feeds        # load the sample Rappahannock feeds
+php bin/console doctrine:fixtures:load -n   # optional
 
-# 
-symfony proxy:domain:attach calendar-demo
+# serve it
 symfony server:start -d
-
-# OR php -S localhost:8300 -t public/
+# OR
+php -S 127.0.0.1:8124 -t public
 ```
 
+Then open the homepage — the aggregated, color-coded calendar with a per-calendar
+toggle legend.
 
+## Workflow
 
-## Workflow 
+* Individuals sign in ("users").
+* Create/Join an Organization.
+* Organization admins can:
+    * link an iCal feed,
+    * import an iCal (`.ics`) file,
+    * create/edit a calendar that lives natively on ccal.
+* Individuals subscribe to the feeds they want; subscribed calendars are shown by default.
 
-* Individuals sign in ("users")
-* Create/Join an Organization
-* Organization Admins can 
-    * Link an iCal feed
-    * Import an iCal (.ics) file, e.g. created from RunMyVillage
-    * Create/Edit a Calendar that resides on ccal.
-* Individuals can
-  * Subscribe to iCal feeds, either in their ccal account or Google account
+## Data model
 
-## Entities
+```
+Org ──┬── Cal ──── Event      (calendars created natively on ccal)
+      └── Feed ─── Booking     (events imported from an external iCal feed)
+User                           (+ a Symfony Workflow on Feed for moderation)
+```
 
-* Org
-   * Cal
-     * Event
-   * Feed
-     * Booking (ICS Event)
+## How aggregation works
 
-https://github.com/tattali/CalendarBundle/blob/master/src/Resources/doc/multi-calendar.md
+`App\EventSource\DatabaseEventSource` (implements the bundle's `EventSourceInterface`)
+reads every `Feed`, fetches its ICS, and tags each event with the feed's slug + color.
+It is auto-registered into the bundle's `EventSourceRegistry` — the bundle does a
+`registerForAutoconfiguration(EventSourceInterface::class)`, so no `services.yaml`
+wiring is needed. The `/ux-calendar/events` feed endpoint serves the merged JSON to
+FullCalendar.
 
-## Sample feeds
-
-* http://www.mysportscal.com/download-major-league-schedules/mlb/
-* https://www.officeholidays.com/subscribe/usa
+`bin/console app:load-demo-feeds` reads the demo calendar list straight from the
+installed bundle (`vendor/survos/ux-calendar-bundle/demo/...`) and upserts `Feed` rows.
 
 ## Tools
 
-old: https://github.com/Graceas/php-ics-reader
-in use: https://github.com/u01jmg3/ics-parser
+* iCal parsing: [`johngrogg/ics-parser`](https://github.com/u01jmg3/ics-parser)
+* iCal generation: [`spatie/icalendar-generator`](https://github.com/spatie/icalendar-generator)
 
-to write iCS:
+## Deployment (Dokku)
 
-(seems to be more current)
-https://github.com/spatie/icalendar-generator
+Uses [`survos/deployment-bundle`](https://github.com/survos/deployment-bundle) and an
+`app.json` (Postgres addon + AssetMapper compile + schema update on predeploy):
 
-(funky DI)
-https://github.com/jasvrcek/ICS and https://github.com/jasvrcek/IcsBundle
-"jsvrcek/ics-bundle": "dev-tac",
-"ics_bundle": {
-"type": "vcs",
-"url": "git@github.com:tacman/IcsBundle.git"
-},
-
-
+```bash
+bin/console dokku bootstrap --force        # create app + remote + scaffold
+ssh dokku@ssh.survos.com postgres:create ccal-db && ssh dokku@ssh.survos.com postgres:link ccal-db ccal
+bin/console dokku config APP_ENV=prod APP_SECRET=$(openssl rand -hex 16) --force
+bin/console dokku deploy
+```

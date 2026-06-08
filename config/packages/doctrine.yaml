@@ -3,6 +3,11 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         profiling_collect_backtrace: '%kernel.debug%'
 
+        # Hide TimescaleDB / toolkit catalog objects from Doctrine's schema diff, so
+        # migrations / schema:update never try to drop extension-owned tables/sequences
+        # (e.g. _timescaledb_catalog.hypertable_id_seq). Matches kpa/harvest.
+        schema_filter: '~^(?!(?:_timescaledb_|timescaledb_|toolkit_))~'
+
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
         #server_version: '16'
