@@ -1,7 +1,7 @@
 #survos_base_bundle_oauth:
 #    resource: '@SurvosBaseBundle/Controller/OAuthController.php'
 #    prefix: /
-#    type: annotation
+#    type: attribute
 #
 #survos_landing: {path: /landing, controller: 'Survos\BaseBundle\Controller\LandingController::landing'}
 #app_logo: {path: /logo, controller: 'Survos\BaseBundle\Controller\LandingController::logo'}

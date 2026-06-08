@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Survos\FieldBundle\Attribute\EntityMeta;
+
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,6 +11,7 @@ use Doctrine\ORM\Mapping\{Entity, Column, Id, GeneratedValue};
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 #[ApiResource]
+#[EntityMeta(icon: 'tabler:calendar-check', label: 'Bookings', group: 'Calendar', order: 50)]
 class Booking
 {
     #[ORM\Id]

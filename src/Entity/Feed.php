@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
+use Survos\FieldBundle\Attribute\EntityMeta;
+use Survos\FieldBundle\Attribute\RouteIdentity;
+use Survos\FieldBundle\Entity\RouteParametersInterface;
+use Survos\FieldBundle\Entity\RouteIdentityTrait;
+
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use App\Repository\FeedRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Survos\CoreBundle\Entity\RouteParametersInterface;
-use Survos\CoreBundle\Entity\RouteParametersTrait;
 
 #[ORM\Entity(repositoryClass: FeedRepository::class)]
 #[ApiResource(
@@ -23,10 +25,12 @@ use Survos\CoreBundle\Entity\RouteParametersTrait;
 )]
 #[ApiFilter(OrderFilter::class, properties: ['marking', 'org', 'size', 'shortName', 'forkedFromId', 'fullName'], arguments: ['orderParameterName' => 'order'])]
 #[ApiFilter(SearchFilter::class, properties: ["marking" => "exact", 'ownerType' => 'exact', 'fullName' => 'partial', 'forkedFromId' => 'exact', 'isZip' => 'exact'])]
-#[ApiFilter(MultiFieldSearchFilter::class, properties: ['fullName', 'shortName'], arguments: ["searchParameterName" => "search"])]
+#[EntityMeta(icon: 'tabler:rss', label: 'Feeds', group: 'Calendar', order: 30)]
+#[RouteIdentity(field: 'slug')]
 class Feed implements RouteParametersInterface
 {
-    use RouteParametersTrait;
+    use RouteIdentityTrait;
+
 
     const WORKFLOW = 'feed';
     const ICON = 'fas fa-chart-column';

@@ -2,19 +2,25 @@
 
 namespace App\Entity;
 
+use Survos\FieldBundle\Attribute\EntityMeta;
+use Survos\FieldBundle\Attribute\RouteIdentity;
+use Survos\FieldBundle\Entity\RouteParametersInterface;
+use Survos\FieldBundle\Entity\RouteIdentityTrait;
+
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\CoreBundle\Entity\RouteParametersInterface;
-use Survos\CoreBundle\Entity\RouteParametersTrait;
 use Survos\WorkflowBundle\Traits\MarkingInterface;
 use Survos\WorkflowBundle\Traits\MarkingTrait;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ApiResource]
+#[EntityMeta(icon: 'tabler:calendar-event', label: 'Events', group: 'Calendar', order: 40)]
+#[RouteIdentity(field: 'id')]
 class Event implements RouteParametersInterface
 {
-    use RouteParametersTrait;
+    use RouteIdentityTrait;
+
     const PLACE_NEW = 'new';
 
     public function __construct()

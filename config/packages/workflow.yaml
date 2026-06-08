@@ -1,2 +1,30 @@
 framework:
-    workflows: null
+    workflows:
+        feed:
+            type: state_machine
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: method
+                property: marking
+            supports:
+                - App\Entity\Feed
+            initial_marking: new
+            places:
+                - new
+                - auto
+                - manual
+                - archived
+            transitions:
+                fetch_ics:
+                    from: [new, manual, auto]
+                    to: auto
+                auto:
+                    from: [new, manual]
+                    to: auto
+                manual:
+                    from: auto
+                    to: manual
+                archive:
+                    from: manual
+                    to: archived

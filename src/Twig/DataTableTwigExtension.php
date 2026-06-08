@@ -2,8 +2,8 @@
 
 namespace App\Twig;
 
-use ApiPlatform\Api\IriConverterInterface;
-//use ApiPlatform\Api\IriConverterInterface;
+use ApiPlatform\Metadata\IriConverterInterface;
+//use ApiPlatform\Metadata\IriConverterInterface;
 //use ApiPlatform\Api\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
